@@ -1,0 +1,73 @@
+CREATE DATABASE banking_system;
+USE banking_system;
+
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    address TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO users (username, password, full_name, email, phone, address) VALUES
+('john_doe', 'pass123', 'John Doe', 'john@email.com', '555-0101', '123 Main St, New York'),
+('jane_smith', 'pass456', 'Jane Smith', 'jane@email.com', '555-0102', '456 Oak Ave, Boston'),
+('bob_jones', 'pass789', 'Bob Jones', 'bob@email.com', '555-0103', '789 Pine Rd, Chicago'),
+('alice_brown', 'pass321', 'Alice Brown', 'alice@email.com', '555-0104', '321 Elm St, Miami'),
+('charlie_wilson', 'pass654', 'Charlie Wilson', 'charlie@email.com', '555-0105', '654 Maple Dr, Seattle'),
+('diana_lee', 'pass987', 'Diana Lee', 'diana@email.com', '555-0106', '987 Cedar Ln, Denver'),
+('frank_miller', 'pass111', 'Frank Miller', 'frank@email.com', '555-0107', '111 Birch Ct, Austin'),
+('grace_davis', 'pass222', 'Grace Davis', 'grace@email.com', '555-0108', '222 Spruce Way, Portland'),
+('henry_garcia', 'pass333', 'Henry Garcia', 'henry@email.com', '555-0109', '333 Willow Blvd, Phoenix'),
+('iris_martinez', 'pass444', 'Iris Martinez', 'iris@email.com', '555-0110', '444 Ash Ave, Dallas');
+
+CREATE TABLE accounts (
+    account_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    account_number VARCHAR(20) NOT NULL UNIQUE,
+    account_type VARCHAR(20) NOT NULL,
+    balance DECIMAL(15,2) NOT NULL DEFAULT 0.00,
+    status VARCHAR(20) NOT NULL DEFAULT 'Active',
+    branch VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+INSERT INTO accounts (user_id, account_number, account_type, balance, status, branch) VALUES
+(1, 'ACC1001', 'Savings', 5000.00, 'Active', 'New York Branch'),
+(2, 'ACC1002', 'Checking', 3500.50, 'Active', 'Boston Branch'),
+(3, 'ACC1003', 'Savings', 12000.75, 'Active', 'Chicago Branch'),
+(4, 'ACC1004', 'Checking', 2500.00, 'Active', 'Miami Branch'),
+(5, 'ACC1005', 'Savings', 8750.25, 'Active', 'Seattle Branch'),
+(6, 'ACC1006', 'Checking', 4200.00, 'Inactive', 'Denver Branch'),
+(7, 'ACC1007', 'Savings', 15000.00, 'Active', 'Austin Branch'),
+(8, 'ACC1008', 'Checking', 6500.50, 'Active', 'Portland Branch'),
+(9, 'ACC1009', 'Savings', 9800.00, 'Active', 'Phoenix Branch'),
+(10, 'ACC1010', 'Checking', 3200.75, 'Active', 'Dallas Branch');
+
+CREATE TABLE transactions (
+    transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+    account_id INT NOT NULL,
+    transaction_type VARCHAR(20) NOT NULL,
+    amount DECIMAL(15,2) NOT NULL,
+    description TEXT NOT NULL,
+    recipient_account VARCHAR(20),
+    transaction_date DATETIME NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'Completed',
+    FOREIGN KEY (account_id) REFERENCES accounts(account_id)
+);
+
+INSERT INTO transactions (account_id, transaction_type, amount, description, recipient_account, transaction_date, status) VALUES
+(1, 'Deposit', 1000.00, 'Salary deposit', NULL, '2024-12-01 10:30:00', 'Completed'),
+(2, 'Withdrawal', 500.00, 'ATM withdrawal', NULL, '2024-12-02 14:15:00', 'Completed'),
+(3, 'Transfer', 750.50, 'Transfer to savings', 'ACC1007', '2024-12-03 09:20:00', 'Completed'),
+(4, 'Deposit', 2000.00, 'Check deposit', NULL, '2024-12-04 11:45:00', 'Completed'),
+(5, 'Withdrawal', 300.00, 'Cash withdrawal', NULL, '2024-12-05 16:30:00', 'Completed'),
+(6, 'Transfer', 1200.00, 'Bill payment', 'ACC1002', '2024-12-06 13:10:00', 'Pending'),
+(7, 'Deposit', 5000.00, 'Investment return', NULL, '2024-12-07 08:00:00', 'Completed'),
+(8, 'Withdrawal', 850.25, 'Shopping', NULL, '2024-12-08 15:20:00', 'Completed'),
+(9, 'Transfer', 600.00, 'Rent payment', 'ACC1004', '2024-12-09 10:00:00', 'Completed'),
+(10, 'Deposit', 1500.00, 'Freelance payment', NULL, '2024-12-10 12:30:00', 'Completed');
