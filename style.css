@@ -126,6 +126,12 @@ body {
     font-family: inherit;
 }
 
+.signup-link {
+    margin-top: 16px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
 /* Buttons */
 .btn {
     padding: 14px 24px;

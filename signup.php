@@ -47,29 +47,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <form method="POST">
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" name="username" required>
+                    <input type="text" name="username" placeholder="Enter your username" required>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" required>
+                    <input type="password" name="password" placeholder="Enter your password" required>
                 </div>
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" name="full_name" required>
+                    <input type="text" name="full_name" placeholder="Enter your full name" required>
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" name="email" required>
+                    <input type="email" name="email" placeholder="Enter your email" required>
                 </div>
                 <div class="form-group">
                     <label>Phone</label>
-                    <input type="text" name="phone" required>
+                    <input type="text" name="phone" placeholder="Enter your phone number" required>
                 </div>
                 <div class="form-group">
                     <label>Address</label>
-                    <textarea name="address" required></textarea>
+                    <textarea name="address" placeholder="Enter your address" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Sign Up</button>
+                <p class="signup-link">Already have an account? <a href="login.php">Login</a></p>
             </form>
         </div>
     </div>
