@@ -66,5 +66,6 @@ $user = mysqli_fetch_assoc($result);
             </form>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

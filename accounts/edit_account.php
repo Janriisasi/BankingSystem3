@@ -82,5 +82,6 @@ $users_result = mysqli_query($conn, $users_sql);
             </form>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

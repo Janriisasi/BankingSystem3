@@ -70,5 +70,6 @@ $result = mysqli_query($conn, $sql);
             </table>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

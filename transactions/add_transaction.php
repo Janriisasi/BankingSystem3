@@ -37,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Transaction</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../enhanced-styles.css">  <!-- ADD THIS -->
 </head>
 <body>
     <div class="navbar">
@@ -46,56 +47,62 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <a href="../users/users.php">Users</a>
             <a href="../accounts/accounts.php">Accounts</a>
             <a href="transactions.php">Transactions</a>
-            <a href="../logout.php"></a>
-			<div class="container">
-    <div class="card">
-        <h2>Add New Transaction</h2>
-        <?php if (isset($error)): ?>
-            <div class="alert alert-error"><?php echo $error; ?></div>
-        <?php endif; ?>
-        <form method="POST">
-            <div class="form-group">
-                <label>Account</label>
-                <select name="account_id" required>
-                    <option value="">Select Account</option>
-                    <?php while ($account = mysqli_fetch_assoc($accounts_result)): ?>
-                        <option value="<?php echo $account['account_id']; ?>"><?php echo $account['account_number']; ?></option>
-                    <?php endwhile; ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Transaction Type</label>
-                <select name="transaction_type" required>
-                    <option value="Deposit">Deposit</option>
-                    <option value="Withdrawal">Withdrawal</option>
-                    <option value="Transfer">Transfer</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Amount</label>
-                <input type="number" name="amount" step="0.01" required>
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <textarea name="description" required></textarea>
-            </div>
-            <div class="form-group">
-                <label>Recipient Account (for transfers)</label>
-                <input type="text" name="recipient_account">
-            </div>
-            <div class="form-group">
-                <label>Transaction Date</label>
-                <input type="datetime-local" name="transaction_date" required>
-            </div>
-            <div class="form-group">
-                <label>Status</label>
-                <select name="status" required>
-                    <option value="Completed">Completed</option>
-                    <option value="Pending">Pending</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-success">Add Transaction</button>
-            <a href="transactions.php" class="btn btn-danger">Cancel</a>
-        </form>
+            <a href="../logout.php">Logout</a>
+        </div>
     </div>
-</div>
+
+    <div class="container">
+        <div class="card">
+            <h2>Add New Transaction</h2>
+            <?php if (isset($error)): ?>
+                <div class="alert alert-error"><?php echo $error; ?></div>
+            <?php endif; ?>
+            <form method="POST">
+                <div class="form-group">
+                    <label>Account</label>
+                    <select name="account_id" required>
+                        <option value="">Select Account</option>
+                        <?php while ($account = mysqli_fetch_assoc($accounts_result)): ?>
+                            <option value="<?php echo $account['account_id']; ?>"><?php echo $account['account_number']; ?></option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Transaction Type</label>
+                    <select name="transaction_type" required>
+                        <option value="Deposit">Deposit</option>
+                        <option value="Withdrawal">Withdrawal</option>
+                        <option value="Transfer">Transfer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input type="number" name="amount" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Recipient Account (for transfers)</label>
+                    <input type="text" name="recipient_account">
+                </div>
+                <div class="form-group">
+                    <label>Transaction Date</label>
+                    <input type="datetime-local" name="transaction_date" required>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select name="status" required>
+                        <option value="Completed">Completed</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Add Transaction</button>
+                <a href="transactions.php" class="btn btn-danger">Cancel</a>
+            </form>
+        </div>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>

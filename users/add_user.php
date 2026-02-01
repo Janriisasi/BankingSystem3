@@ -82,5 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </form>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

@@ -43,20 +43,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="card">
             <h2>Login</h2>
             <?php if (isset($error)): ?>
-                <div class="alert alert-error"><?php echo $error; ?></div>
+                <script>
+                    var errorMsg = "<?php echo $error; ?>";
+                    document.write(errorMsg);
+                </script>
             <?php endif; ?>
+
             <form method="POST">
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" name="username" placeholder="Enter username" required>
+                    <input type="text" name="username" id="username" required>
                 </div>
+
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" placeholder="Enter password" required>
+                    <input type="password" name="password" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
                 <p class="signup-link">Don't have an account? <a href="signup.php">Sign Up</a></p>
             </form>
+            <p id="preview"></p>
+            <p id="pass"></p>
+
+            <script>
+                const userInput = document.getElementById("username");
+
+                userInput.addEventListener("input", function () {
+                    document.getElementById("preview").innerHTML =
+                        "Live Preview: " + userInput.value;
+                });
+            </script>
+            <div id="message"></div>
+
+            <script>
+                const params = new URLSearchParams(window.location.search);
+                const msg = params.get("msg");
+
+                if (msg) {
+                    document.getElementById("message").innerHTML = msg;
+                }
+            </script>
         </div>
     </div>
 </body>
