@@ -53,24 +53,90 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-group">
                     <label>Username</label>
                     <input type="text" name="username" id="username" required>
+                    <small id="usernameStatus"></small>
                 </div>
 
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" required>
+                    <input type="password" name="password" id="password" required>
+                    <small id="passwordStatus"></small>
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary" id="loginBtn">Login</button>
                 <p class="signup-link">Don't have an account? <a href="signup.php">Sign Up</a></p>
             </form>
-            <p id="preview"></p>
-            <p id="pass"></p>
 
             <script>
                 const userInput = document.getElementById("username");
+                const passwordInput = document.getElementById("password");
+                const loginBtn = document.getElementById("loginBtn");
+                const usernameStatus = document.getElementById("usernameStatus");
+                const passwordStatus = document.getElementById("passwordStatus");
+
+                // Username input events
+                userInput.addEventListener("focus", function () {
+                    usernameStatus.innerHTML = "Username field is active";
+                    usernameStatus.style.color = "green";
+                });
+
+                userInput.addEventListener("blur", function () {
+                    if (userInput.value.length === 0) {
+                        usernameStatus.innerHTML = "Username cannot be empty";
+                        usernameStatus.style.color = "red";
+                    } else {
+                        usernameStatus.innerHTML = "Username: " + userInput.value;
+                        usernameStatus.style.color = "green";
+                    }
+                });
+
+                // Password input events
+                passwordInput.addEventListener("focus", function () {
+                    passwordStatus.innerHTML = "Password field is active";
+                    passwordStatus.style.color = "green";
+                });
+
+                passwordInput.addEventListener("blur", function () {
+                    if (passwordInput.value.length === 0) {
+                        passwordStatus.innerHTML = "Password cannot be empty";
+                        passwordStatus.style.color = "red";
+                    } else {
+                        passwordStatus.innerHTML = "Password length: " + passwordInput.value.length + " characters";
+                        passwordStatus.style.color = "green";
+                    }
+                });
+
+                // Button hover effects
+                loginBtn.addEventListener("mouseover", function () {
+                    loginBtn.style.transform = "scale(1.05)";
+                    loginBtn.style.transition = "0.3s";
+                });
+
+                loginBtn.addEventListener("mouseout", function () {
+                    loginBtn.style.transform = "scale(1)";
+                });
+
+                // Button click validation
+                loginBtn.addEventListener("click", function (e) {
+                    if (userInput.value === "" || passwordInput.value === "") {
+                        alert("Please fill in all fields!");
+                        e.preventDefault();
+                    } else {
+                        alert("Attempting to login as: " + userInput.value);
+                    }
+                });
+
+                // Function to display live console preview
+                function displayConsolePreview() {
+                    console.clear();
+                    console.log("Username: " + userInput.value);
+                    console.log("Password: " + passwordInput.value);
+                }
 
                 userInput.addEventListener("input", function () {
-                    document.getElementById("preview").innerHTML =
-                        "Live Preview: " + userInput.value;
+                    displayConsolePreview();
+                });
+
+                passwordInput.addEventListener("input", function () {
+                    displayConsolePreview();
                 });
             </script>
             <div id="message"></div>
