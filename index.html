@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Awesome Site</title>
+    <style>
+        body { background-color: #222; color: #2ecc71; font-family: sans-serif; text-align: center; padding-top: 50px; }
+        input[type="text"] { background: #333; border: 2px solid #27ae60; border-radius: 5px; color: white; padding: 10px; width: 400px; }
+        button { background: #27ae60; border: none; border-radius: 5px; color: white; padding: 10px 20px; cursor: pointer; }
+        #output { margin-top: 20px; color: #ddd; }
+    </style>
+</head>
+<body>
+
+    <h1>For Java Script Injection Only</h1>
+    
+    <form id="searchForm">
+        <input type="text" id="searchBar" placeholder="Search here...">
+        <button type="submit">Search</button>
+    </form>
+
+    <div id="output">
+        <p>You Queried: <span id="queryDisplay"></span></p>
+    </div>
+
+    <script>
+        const form = document.getElementById('searchForm');
+        const input = document.getElementById('searchBar');
+        const display = document.getElementById('queryDisplay');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const val = input.value;
+            
+            // This line is "vulnerable" because it uses innerHTML
+            // which tells the browser to parse the string as HTML/JS.
+            display.innerHTML = val; 
+        });
+    </script>
+</body>
+</html>
