@@ -13,6 +13,32 @@ if (!isset($_SESSION['user_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Styles specific to the educational search bar */
+        .search-container {
+            margin: 20px auto;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #ccc;
+        }
+        .search-container input[type="text"] { 
+            background: #333; 
+            border: 2px solid #27ae60; 
+            border-radius: 5px; 
+            color: white; 
+            padding: 10px; 
+            width: 400px; 
+        }
+        .search-container button { 
+            background: #27ae60; 
+            border: none; 
+            border-radius: 5px; 
+            color: white; 
+            padding: 10px 20px; 
+            cursor: pointer; 
+        }
+        #output { margin-top: 20px; color: #333; font-weight: bold; }
+    </style>
 </head>
 <body>
     <div class="navbar">
@@ -32,6 +58,17 @@ if (!isset($_SESSION['user_id'])) {
             <p>Manage your banking operations from the dashboard below.</p>
         </div>
 
+        <div class="search-container">
+            <h3>For Java Script Injection Only</h3>
+            <form id="searchForm">
+                <input type="text" id="searchBar" placeholder="Search here...">
+                <button type="submit">Search</button>
+            </form>
+
+            <div id="output">
+                <p>You Queried: <span id="queryDisplay"></span></p>
+            </div>
+        </div>
         <div class="dashboard-cards">
             <div class="dashboard-card">
                 <h3>👥 Users</h3>
@@ -52,5 +89,18 @@ if (!isset($_SESSION['user_id'])) {
             </div>
         </div>
     </div>
+
+    <script>
+        const form = document.getElementById('searchForm');
+        const input = document.getElementById('searchBar');
+        const display = document.getElementById('queryDisplay');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const val = input.value;
+            
+            display.innerHTML = val; 
+        });
+    </script>
 </body>
 </html>
