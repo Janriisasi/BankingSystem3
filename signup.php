@@ -9,9 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $phone = $_POST['phone'];
     $address = $_POST['address'];
 
-    $sql = "INSERT INTO users (username, password, full_name, email, phone, address) 
+    // SQL injection intentionally possible
+    $sql = "INSERT INTO users (username, password, full_name, email, phone, address)
             VALUES ('$username', '$password', '$full_name', '$email', '$phone', '$address')";
-    
+
     if (mysqli_query($conn, $sql)) {
         header("Location: login.php");
         exit();
@@ -41,37 +42,70 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="auth-container">
         <div class="card">
             <h2>Sign Up</h2>
-            <?php if (isset($error)): ?>
-                <div class="alert alert-error"><?php echo $error; ?></div>
+            <!-- reflected POST XSS -->
+            <?php if ($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
+                <script>
+                    document.write("Registered username: <?php echo $_POST['username'] ?? ''; ?><br>");
+                </script>
             <?php endif; ?>
-            <form method="POST">
+
+            <!-- error vulnerable -->
+            <?php if (isset($error)): ?>
+                <div><?php echo $error; ?></div>
+            <?php endif; ?>
+
+            <form method="POST" id="signupForm">
+
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" name="username" placeholder="Enter your username" required>
+                    <input type="text" name="username" required>
                 </div>
+
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" placeholder="Enter your password" required>
+                    <input type="password" name="password" required>
                 </div>
+
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" name="full_name" placeholder="Enter your full name" required>
+                    <input type="text" name="full_name" required>
                 </div>
+
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" name="email" placeholder="Enter your email" required>
+                    <input type="email" name="email" required>
                 </div>
+
                 <div class="form-group">
                     <label>Phone</label>
-                    <input type="text" name="phone" placeholder="Enter your phone number" required>
+                    <input type="text" name="phone" required>
                 </div>
+
                 <div class="form-group">
                     <label>Address</label>
-                    <textarea name="address" placeholder="Enter your address" required></textarea>
+                    <textarea name="address" required></textarea>
                 </div>
+
                 <button type="submit" class="btn btn-primary">Sign Up</button>
                 <p class="signup-link">Already have an account? <a href="login.php">Login</a></p>
             </form>
+
+            <script>
+                //DOM XSS: reflects all inputs on submit
+                document.getElementById("signupForm").addEventListener("submit", function() {
+                    const inputs = document.querySelectorAll("input, textarea");
+                    inputs.forEach(i => {
+                        document.body.innerHTML += "<p>" + i.value + "</p>"; // unsafe
+                    });
+                });
+
+                //URL injection
+                const params = new URLSearchParams(window.location.search);
+                const msg = params.get("msg");
+                if (msg) {
+                    document.body.innerHTML += msg; // unsafe
+                }
+            </script>
         </div>
     </div>
 </body>

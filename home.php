@@ -22,8 +22,8 @@ if (!isset($_SESSION['user_id'])) {
             border-top: 1px solid #ccc;
         }
         .search-container input[type="text"] { 
-            background: #333; 
-            border: 2px solid #27ae60; 
+            background: #ffffff; 
+            border: 2px solid #000000; 
             border-radius: 5px; 
             color: white; 
             padding: 10px; 
